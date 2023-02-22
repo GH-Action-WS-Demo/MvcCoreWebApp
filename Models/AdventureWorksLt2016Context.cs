@@ -27,8 +27,20 @@ public partial class AdventureWorksLt2016Context : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlServer(_dbConnectionSettings.AdventureDbWorksContext);
+            
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+            {
+                optionsBuilder.UseSqlServer(_dbConnectionSettings.AdventureDbWorksContextAzure);
+            }
+            else
+            {
+                optionsBuilder.UseSqlServer(_dbConnectionSettings.AdventureDbWorksContext);
+            }
+
         }
+
+
+
     }
     public virtual DbSet<Address> Addresses { get; set; }
 
@@ -60,9 +72,9 @@ public partial class AdventureWorksLt2016Context : DbContext
 
     public virtual DbSet<VProductModelCatalogDescription> VProductModelCatalogDescriptions { get; set; }
 
-//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=AdventureWorksLT2016;Integrated Security=True");
+    //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+    //        => optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=AdventureWorksLT2016;Integrated Security=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -7,8 +7,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<AdventureWorksLt2016Context>(options =>
+
+
+if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+{
+    builder.Services.AddDbContext<AdventureWorksLt2016Context>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("AdventureWorksDbContextAzure")));
+}
+else
+{
+    builder.Services.AddDbContext<AdventureWorksLt2016Context>(options =>
      options.UseSqlServer(builder.Configuration.GetConnectionString("AdventureWorksDbContext")));
+}
 
 var app = builder.Build();
 
