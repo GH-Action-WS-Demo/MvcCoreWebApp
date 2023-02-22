@@ -6,4 +6,3 @@
         public string AdventureDbWorksContextAzure { get; set; }
     }
 }
-}

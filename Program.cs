@@ -19,6 +19,7 @@ else
     builder.Services.AddDbContext<AdventureWorksLt2016Context>(options =>
      options.UseSqlServer(builder.Configuration.GetConnectionString("AdventureWorksDbContext")));
 }
+builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]);
 
 var app = builder.Build();
 
