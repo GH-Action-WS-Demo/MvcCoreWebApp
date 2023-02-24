@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using MvcCoreWebApp.Models;
 using System.Configuration;
+using Microsoft.Identity.Web;
+using Microsoft.Identity.Web.UI;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +24,21 @@ else
 }
 builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]);
 
+//builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
+//.AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureAd"));
+
+//builder.Services.AddAuthorization(options =>
+//{
+//    // By default, all incoming requests will be authorized according to the    D2.M3.IdentityInCloud.md 11 / 3 / 2022 10 / 14 default policy
+// options.FallbackPolicy = options.DefaultPolicy;
+//});
+
+//builder.Services.AddRazorPages()
+// .AddMvcOptions(options => { })
+// .AddMicrosoftIdentityUI();
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -34,9 +52,14 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+
 app.UseRouting();
 
-app.UseAuthorization();
+//app.UseAuthorization();
+
+//app.UseAuthentication();
+
+//app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",
